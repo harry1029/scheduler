@@ -67,6 +67,47 @@ export default function Application(props) {
   //   setState(prev => ({ ...prev, days }));
   // };
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return Promise.resolve(axios.put(`http://localhost:8001/api/appointments/${id}`, {
+      id,
+      interview,
+    }))
+    .then(response => {
+      console.log("Updated Appointments in BookInterview!");
+      // Update to new state after updating through lowest level (appointment) and then lower level (appointments)
+      setState({ ...state, appointments });
+    })
+  };
+
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return Promise.resolve(axios.delete(`http://localhost:8001/api/appointments/${id}`))
+    .then(response => {
+      console.log("Deleted Appointments in cancelInterview!");
+      console.log("Response after DELETE: ", response);
+      // Update to new state after updating through lowest level (appointment) and then lower level (appointments)
+      setState({ ...state, appointments });
+    })
+  };
+
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
@@ -75,15 +116,18 @@ export default function Application(props) {
 
     return (
       <Appointment
-      // Note: Put spread operator at the top to avoid override of assigning values
-      {...appointment} 
-      key={appointment.id}
-      interviewers={interviewers}
-      interview={interview}
+        // Note: Put spread operator at the top to avoid override of assigning values
+        {...appointment}
+        key={appointment.id}
+        interviewers={interviewers}
+        interview={interview}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     )
   });
 
+  // Data Fetching
   useEffect(() => {
     // axios.get(requestUrl)
     //   .then(response => {
@@ -100,7 +144,8 @@ export default function Application(props) {
     ]).then((all) => {
       const [first, second, third] = all;
 
-      setState(prev => ({...prev, days: first.data, appointments: second.data, interviewers: third.data}))
+      setState(prev => ({ ...prev, days: first.data, appointments: second.data, interviewers: third.data }));
+      console.log("Refresh!");
     })
   }, [])
 
