@@ -78,15 +78,23 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    return Promise.resolve(axios.put(`http://localhost:8001/api/appointments/${id}`, {
+    return (axios.put(`http://localhost:8001/api/appointments/${id}`, {
       id,
       interview,
-    }))
-    .then(response => {
-      console.log("Updated Appointments in BookInterview!");
-      // Update to new state after updating through lowest level (appointment) and then lower level (appointments)
-      setState({ ...state, appointments });
     })
+      .then(response => {
+        console.log("Updated Appointments in BookInterview!");
+        // Update to new state after updating through lowest level (appointment) and then lower level (appointments)
+        setState({ ...state, appointments });
+        // Return true to Promise condition in application.js
+        return true;
+      })
+      .catch((error) => {
+        console.log("Error: bookInterview Error!");
+        console.log(error.response.status);
+        // Return true to Promise condition in application.js
+        return false;
+      }))
   };
 
   function cancelInterview(id) {
@@ -99,13 +107,19 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    return Promise.resolve(axios.delete(`http://localhost:8001/api/appointments/${id}`))
-    .then(response => {
-      console.log("Deleted Appointments in cancelInterview!");
-      console.log("Response after DELETE: ", response);
-      // Update to new state after updating through lowest level (appointment) and then lower level (appointments)
-      setState({ ...state, appointments });
-    })
+    return (axios.delete(`http://localhost:8001/api/appointments/${id}`))
+      .then(response => {
+        console.log("Deleted Appointments in cancelInterview!");
+        console.log("Response after DELETE: ", response);
+        // Update to new state after updating through lowest level (appointment) and then lower level (appointments)
+        setState({ ...state, appointments });
+        return true;
+      })
+      .catch((error) => {
+        console.log("Error: cancelInterview Error!");
+        console.log(error.response.status);
+        return false;
+      })
   };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);

@@ -12,8 +12,10 @@ export default function useVisualMode(initial) {
       // Use spread operator to make shallow copy without last element
       const newHistory = [...history].slice(0, -1);
       setHistory([...newHistory, newMode]);
+      console.log(newMode, history)
     } else {
       setHistory([...history, newMode]);
+      console.log(newMode, history)
     }
   };
 
@@ -23,12 +25,13 @@ export default function useVisualMode(initial) {
       return;
     };
     setHistory([...history].slice(0, -1));
+    console.log(history)
     // setMode(history[history.length - 2]);
   };
 
   return {
     mode: history[history.length - 1],
     transition,
-    back
+    back,
   };
 }
