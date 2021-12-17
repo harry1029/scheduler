@@ -27,7 +27,7 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   )
-
+  console.log("Props.interview: ", props.interview);
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -36,6 +36,7 @@ export default function Appointment(props) {
     // Transition to Saving state while waiting for Axios to finish PUT request
     transition(SAVING);
 
+    // After resolving the promise in bookInterview, transition to SHOW form
     props.bookInterview(props.id, interview)
       .then(response => {
         console.log("bookInterview Response: ", response);
