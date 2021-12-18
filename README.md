@@ -1,4 +1,6 @@
 # Interview Scheduler
+A simple scheduler that allows the user to book appointments!
+Allows create, edit, and deletion of appointments within the weekdays.
 
 ## Final Product
 
