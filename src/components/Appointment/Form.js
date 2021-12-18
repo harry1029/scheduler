@@ -22,12 +22,12 @@ export default function Form(props) {
     props.onSave(student, interviewer);
   }
 
-  const reset = function() {
+  const reset = function () {
     setStudent("");
     setInterviewer("");
   }
 
-  const cancel = function() {
+  const cancel = function () {
     onCancel();
     reset();
   }

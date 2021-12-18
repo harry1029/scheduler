@@ -5,8 +5,6 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   function transition(newMode, replace = false) {
-    // Change current mode to newMode
-    // setMode(newMode);
     // Add newMode to the history array
     if (replace === true) {
       // Use spread operator to make shallow copy without last element
@@ -21,12 +19,10 @@ export default function useVisualMode(initial) {
 
   function back() {
     // Make sure history array contains at least 1 item
-    if(history.length <= 1) {
+    if (history.length <= 1) {
       return;
     };
     setHistory([...history].slice(0, -1));
-    console.log(history)
-    // setMode(history[history.length - 2]);
   };
 
   return {
