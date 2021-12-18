@@ -1,5 +1,15 @@
 # Interview Scheduler
 
+## Final Product
+
+!["screenshot description"](https://github.com/harry1029/scheduler/blob/master/docs/scheduler_1.gif)
+
+!["screenshot description"](https://github.com/harry1029/scheduler/blob/master/docs/scheduler_2.gif)
+
+!["screenshot description"](https://github.com/harry1029/scheduler/blob/master/docs/scheduler_3.gif)
+
+!["screenshot description"](https://github.com/harry1029/scheduler/blob/master/docs/scheduler_4.gif)
+
 ## Setup
 
 Install dependencies with `npm install`.
